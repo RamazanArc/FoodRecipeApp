@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
 import styles from "./fooddetails.module.css";
+import ItemList from "./ItemList";
 export default function FoodDetails({ foodId }) {
   const [food, setFood] = useState({});
   const [isLoading, setIsLoading] = useState(true);
@@ -49,7 +50,8 @@ export default function FoodDetails({ foodId }) {
           </strong>
         </div>
       </div>
-
+      <h2>Ingredients</h2>
+      <ItemList food={food} isLoading={isLoading} />
       <h2>Instructions</h2>
       <div className={styles.recipeInstructions}>
         <ol>
