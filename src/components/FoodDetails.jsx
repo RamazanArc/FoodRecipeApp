@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
-
+import styles from "./fooddetails.module.css";
 export default function FoodDetails({ foodId }) {
   const [food, setFood] = useState({});
   const [isLoading, setIsLoading] = useState(true);
@@ -26,31 +26,41 @@ export default function FoodDetails({ foodId }) {
   }, [foodId]);
   // foodId her değiştiğinde fetch işlemi tekrar yapılacak
   return (
-    <div>
+    <div className={styles.recipeCard}>
       <div>
-        <h1>{food.title}</h1>
-        <img src={food.image} alt="" />
-        <div>
+        <h1 className={styles.recipeName}>{food.title}</h1>
+        <img className={styles.recipeImage} src={food.image} alt="" />
+        <div className={styles.recipeDetails}>
           <span>
             <strong>⏰{food.readyInMinutes} Minutes</strong>
           </span>
           <span>
             👦<strong>Serves {food.servings}</strong>
           </span>
-          <span>{food.vegetarian ? "🍎 Vegetarian" : "🍖 Non-Vegetarian"}</span>
+          <span>
+            <strong>
+              {food.vegetarian ? "🍎 Vegetarian" : "🍖 Non-Vegetarian"}
+            </strong>
+          </span>
         </div>
         <div>
-          $<span>{food.pricePerServing / 100} Per Serving</span>
+          <strong>
+            $<span>{food.pricePerServing / 100} Per Serving</span>
+          </strong>
         </div>
       </div>
 
-      <div>
-        <h2>Instructions</h2>
-        {isLoading ? (
-          <p>Loading...</p>
-        ) : (
-          food.analyzedInstructions[0].steps.map((step) => <li>{step.step}</li>)
-        )}
+      <h2>Instructions</h2>
+      <div className={styles.recipeInstructions}>
+        <ol>
+          {isLoading ? (
+            <p>Loading...</p>
+          ) : (
+            food.analyzedInstructions[0].steps.map((step) => (
+              <li>{step.step}</li>
+            ))
+          )}
+        </ol>
       </div>
     </div>
   );
